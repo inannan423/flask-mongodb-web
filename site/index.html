@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jetzihan</title>
+    <!-- 引入 css 文件 -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<!-- 引入 Vue.js -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<body>
+    <div id="app" class="main">
+        <h1>输入姓名查询学号</h1>
+        <!-- 值绑定，监听输入框的内容变化，如果 Input 内内容改变，data.id就改变为这个值 -->
+        <input v-model="id" type="text" placeholder="学号" />
+        <!-- @onclick 触发事件名，后面的函数在 method 中 -->
+        <button class="button" id="signIn" @click="Query">查询</button>
+        <div v-if="result">
+            姓名：{{result.name}}
+            <br/>
+            班级：{{result.class}}
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    // 创建vue实例
+    const app = new Vue({
+        // 交代宿主是谁
+        el: "#app",
+        // 数据容器
+        data: {
+            id:"",
+            result:"",
+        },
+        // 函数方法
+        methods: {
+            Query() {
+                console.log(this.id);
+                // 开始 http 请求
+                const request = new XMLHttpRequest();   // Ajax 初始化异步请求
+                // 发起 http 请求
+                request.open("GET", "http://127.0.0.1:5000/getname" +"?ID="+ this.id);
+                request.onreadystatechange = () => {
+                    if (request.readyState === 4 && request.status === 200) {
+                        // 格式化返回值为json
+                        const obj = JSON.parse(request.responseText);
+                        console.log(obj);
+                        // 让 data 里面的 result 变成这个值
+                        this.result = obj.result;
+                        console.log(this.result);
+                    }
+                };
+                request.send();
+                // end
+            }
+        },
+    })
+</script>
