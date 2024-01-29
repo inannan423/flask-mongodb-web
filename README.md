@@ -15,4 +15,4 @@ git clone https://github.com/inannan423/flask-mongodb-web.git
 
 ## 详细解析
 
-[Flask（PythonWeb）+MongoDB 实现简单Web后端](https://jetlab.live/blog/2022-10-27-flask-back)
+[Flask（PythonWeb）+MongoDB 实现简单Web后端](https://www.jet-lab.site/blog/2022-10-27-flask-back)
